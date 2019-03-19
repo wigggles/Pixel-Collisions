@@ -1,0 +1,13 @@
+
+
+Created by Wiggles (236666024651390978)
+
+
+
+With Thanks to:
+  
+    Cubuzz (264453632571867136)
+  For their Smooth Screen tracking script.
+  
+    Maskendoktor (414891775795265538)
+  For Gosu and help with Blob scanning options.
