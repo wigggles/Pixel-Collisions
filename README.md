@@ -22,4 +22,4 @@ If you change the Image used for the map, you will also have to delete the map c
 
 ### Screen Shot
 
-![alt text](https://raw.githubusercontent.com/wigggles/Pixel-Collisions/master/Media/ScreenShots/Screen_Shot.png "")
+![alt text](https://raw.githubusercontent.com/wigggles/Pixel-Collisions/9823026afb1dbbe4f8d86d27cf73fc8a6a347c1c/Media/ScreenShots/Screen_Shot.png "")
