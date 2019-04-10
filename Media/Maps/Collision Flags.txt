@@ -1,0 +1,44 @@
+
+Grab the Hex value of the color to use as a flag for collision type:
+* The eye dropper tool in paint should help you get the values.
+
+
+:solid,
+:water,
+:ladder,
+
+:player_start
+
+#------------------------------------------------------------------
+List what the color values you used in your map should do here in 
+this list using the above :flags and your color values. :Flags can
+be used multiple times for many diffrent colors.
+
+
+@@collision_type = { # values in color RGBA
+  # color_hex => :collision_type
+
+  "321e1fff" => :player_start, # like a brownish
+
+  "22b14cff" => :solid,        # green
+  
+}
+
+#------------------------------------------------------------------
+
+The hex value can be broken up like so:
+
+Red  Green  Blue  Alpha
+
+ff    ff     ff    ff
+
+00    00     00    00
+
+
+"ffffffff"  = White
+"000000ff"  = Black
+
+"00000000"  = Invisible
+
+
+

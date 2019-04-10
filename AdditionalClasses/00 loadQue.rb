@@ -11,8 +11,8 @@ class Load_Que
     @@finished = false
     @list      = []
     @@progress = [0, 1]
-    @font = Gosu::Font.new($window, Gosu::default_font_name, 28)
-    $window.update_interval = 1.0
+    @font = Gosu::Font.new($program, Gosu::default_font_name, 28)
+    $program.update_interval = 1.0
     @cap_up = 0
   end
   #---------------------------------------------------------------------------------------------------------
@@ -28,7 +28,7 @@ class Load_Que
     ext = '.' * @cap_up
     @cap_up += 1
     @cap_up = 0 if @cap_up > 3
-    $window.caption = " Loading#{ext}"
+    $program.caption = " Loading#{ext}"
     if @list.empty? or @index > @list.size
       return []
     end
@@ -71,7 +71,7 @@ class Load_Que
     @list      = []
     @index     = 0
     @@finished = true
-    $window.update_interval = UP_MS_DRAW
+    $program.update_interval = UP_MS_DRAW
   end
   #---------------------------------------------------------------------------------------------------------
   def done?
@@ -92,19 +92,19 @@ class Load_Que
   end
   #---------------------------------------------------------------------------------------------------------
   def draw
-    $window.draw_rect(0, 0, $window.width, $window.height, 0xff_ffffff, 0)
+    $program.draw_rect(0, 0, $program.width, $program.height, 0xff_ffffff, 0)
     # status
     header, percentage = current_progress
     # percentage bar
-    bw = $window.width  / 2
-    bh = $window.height / 16
-    $window.draw_rect($window.width / 2 - (bw / 2), $window.height / 2 - (bh / 2), bw, bh, 0xff_000000, 10)
+    bw = $program.width  / 2
+    bh = $program.height / 16
+    $program.draw_rect($program.width / 2 - (bw / 2), $program.height / 2 - (bh / 2), bw, bh, 0xff_000000, 10)
     # bar filler
     pw = (bw.to_f * percentage.to_f).round
     #puts "loading #{pw} #{$loading_screen[0]} / #{$loading_screen[1]}"
-    px = $window.width / 2 - (bw / 2)
-    py = $window.height / 2 - (bh / 2) - 2
-    $window.draw_rect(px, py + 6, pw, bh - 8, 0xff_00ff00, 20)
+    px = $program.width / 2 - (bw / 2)
+    py = $program.height / 2 - (bh / 2) - 2
+    $program.draw_rect(px, py + 6, pw, bh - 8, 0xff_00ff00, 20)
     # header line
     @font.draw(header, px, py - 32, 100, 1, 1, 0xFF_000000)
   end

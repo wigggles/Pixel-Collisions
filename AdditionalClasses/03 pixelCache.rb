@@ -10,6 +10,7 @@ class Map_Stage::PixelMapCache
     @@collision_type = { # values in color RGBA
       # color_flag => :collision_type
       "ffffffff" => :solid,
+      "22b14cff" => :solid,
       "5598c3ff" => :solid,
       "0065a6ff" => :solid,
       "0000ffff" => :water,
@@ -38,7 +39,7 @@ class Map_Stage::PixelMapCache
     @pre_cached = false
     width = (@width / MAP_CHUNK) + 1; height = (@height / MAP_CHUNK) + 1
     @load_index = 1; @load_size = width * height
-    @screen_chunks  = [($window.width / MAP_CHUNK).ceil + 1, ($window.height / MAP_CHUNK).ceil + 1]
+    @screen_chunks  = [($program.width / MAP_CHUNK).ceil + 1, ($program.height / MAP_CHUNK).ceil + 1]
     #@@image_chunks  = {}
     @@collision_map = {}
     @@image = nil

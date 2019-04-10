@@ -1,52 +1,60 @@
 #!/usr/bin/env ruby
-# https://stackoverflow.com/questions/29073826/env-ruby-r-no-such-file-or-directory
+#=====================================================================================================================================================
+# Additional tutorials and usefull information.
+#   https://github.com/vaiorabbit/ruby-opengl
+#   http://larskanis.github.io/opengl/tutorial.html
+#=====================================================================================================================================================
 puts "\n" * 3 # some top buffer for terminal notifications.
+puts "*" * 70
+#-----------------------------------------------------------------------------------------------------------------------------------------------------
 # https://www.codecademy.com/articles/ruby-command-line-argv
 APP_NAME = 'Desktop Garage'
 case ARGV.first
 when 'debug'
   puts "#{APP_NAME} is in debug mode."
 end
-#=====================================================================================================================================================
-# Base Program Window.
-#=====================================================================================================================================================
-module Konfigure
-  #---------------------------------------------------------------------------------------------------------
-  UP_MS_DRAW  = 15    # 60 FPS = 16.6666 : 50 FPS = 20.0 : 40 FPS = 25.222
-    
-  LVL_ONE = 'TestMap' # level to load first  : Big_Map : Yuge_Map : TestMap
-  MAP_CHUNK   = 750   # size of the pixel map collision chunk clusters
-  CONDENSE_MAP= 3     # condense the pixel cache, I.E. instead of every pixel, every 2 or third one.
-  #---------------------------------------------------------------------------------------------------------
-end
 #-----------------------------------------------------------------------------------------------------------------------------------------------------
 ROOT = File.expand_path('.',__dir__)
-puts "strating"
-require 'gosu'
-require "#{ROOT}/requireAll.rb"; include RequireAll
+puts "starting up..."
+# Gem used for OS window management and display libs as well as User input call backs.
+require 'gosu'    # https://rubygems.org/gems/gosu
 #-----------------------------------------------------------------------------------------------------------------------------------------------------
-script_main_dir = File.join(ROOT, "AdditionalClasses")
-if FileTest.directory?(script_main_dir)
-  begin
-    require_all(script_main_dir) rescue LoadError
-  rescue => error
-    puts error
+# System wide vairable settings.
+require "#{ROOT}/Konfigure.rb"
+include Konfigure # inclusion of CONSTANT settings system wide.
+
+#=====================================================================================================================================================
+# Load all additional source scripts. Files need to be in directory ALPHABETICAL order if refrenced in a later object source file.
+script_dir = File.join(ROOT, "AdditionalClasses")
+if FileTest.directory?(script_dir)
+  # map to hash parrent directory
+  files = [script_dir].map do |path|
+    if File.directory?(path)
+      Dir[File.join(path, '**', '*.rb')] # grab EVERY .rb file in provided directory.
+    else # dir to file
+      path
+    end
+  end.flatten
+  # require all located source file_dirs
+  files.each do |source_file|
+    begin
+      require(source_file)
+    rescue => error # catch syntax errors on a file basis
+      temp = source_file.split('/').last
+      puts("FO Error: loading dir (#{temp})\n#{error}")
+    end
   end
-else
-  puts "Could not locate the main scripts directory, where is it?!"
-  puts script_main_dir
 end
 
 #=====================================================================================================================================================
-# Gosu display window for the game.
+# Gosu display window for the program.
 #=====================================================================================================================================================
 class Program < Gosu::Window
-  include Konfigure
   #---------------------------------------------------------------------------------------------------------
 	def initialize
     @@active_class = nil
-		super(800, 600, {:update_interval => UP_MS_DRAW, :fullscreen => false})
-		$window = self
+		super(RESOLUTION[0], RESOLUTION[1], {:update_interval => UP_MS_DRAW, :fullscreen => ISFULLSCREEN})
+		$program = self
     # set current class loop
     swap_active(Main_Menu.new)
 	end

@@ -28,8 +28,8 @@ class Map_Stage < Base_Active
   #---------------------------------------------------------------------------------------------------------
   def calc_camera_movement(verbose = 0)
     # calculate where the camera should be
-    @camera_should_x = $window.width / 2 + @player[1] + (@player[0].width / 2)
-    @camera_should_y = $window.height / 2 - @player[2] - (@player[0].height / 2)
+    @camera_should_x = $program.width / 2 + @player[1] + (@player[0].width / 2)
+    @camera_should_y = $program.height / 2 - @player[2] - (@player[0].height / 2)
     # calculate how much the camera should move
     @camera_pending_move_x = (@camera_should_x - @camera_is_x) / 30
     @camera_pending_move_y = (@camera_should_y - @camera_is_y) / 40
@@ -45,7 +45,7 @@ class Map_Stage < Base_Active
   #---------------------------------------------------------------------------------------------------------
   def update_button_triggers
     if Gosu::button_down?(41) # esc
-      $window.swap_active(Main_Menu.new)
+      $program.swap_active(Main_Menu.new)
     end
   end
   #---------------------------------------------------------------------------------------------------------
@@ -149,10 +149,10 @@ class Map_Stage < Base_Active
       # empty space
     end
     if is_start
-      @player[1] = nx - $window.width / 4
-      @player[2] = ny + $window.height / 2
-      @camera_is_x = nx - $window.width + @player[1] - ($window.width * 2) + ($window.width / 4)
-      @camera_is_y = -(ny - $window.height) - $window.height - ($window.height / 4)
+      @player[1] = nx - $program.width / 4
+      @player[2] = ny + $program.height / 2
+      @camera_is_x = nx - $program.width + @player[1] - ($program.width * 2) + ($program.width / 4)
+      @camera_is_y = -(ny - $program.height) - $program.height - ($program.height / 4)
       puts "Setting screen @ [#{@camera_is_x}, #{@camera_is_y}] | #{@player[1]}, #{@player[2]}"
     else
       # scroll map / move player
@@ -244,7 +244,7 @@ class Map_Stage < Base_Active
   def draw
     return unless @@can_draw
     self.calc_camera_movement
-    Gosu::translate(-@camera_is_x + $window.width, @camera_is_y) do
+    Gosu::translate(-@camera_is_x + $program.width, @camera_is_y) do
       @@tilemap.draw(0, 0)
       @player[0].draw(@player[1], @player[2], 200)
       if DEBUG_COLISION
@@ -252,15 +252,15 @@ class Map_Stage < Base_Active
         @player[3].each do |poly_intersect|
           px = @player[1] + poly_intersect[0]
           py = @player[2] + poly_intersect[1]
-          $window.draw_rect(px - 2, py - 2, 5, 5, 0xff_ff00ff, 300)
+          $program.draw_rect(px - 2, py - 2, 5, 5, 0xff_ff00ff, 300)
         end
         # show step spots
         leg = STEP_SLOPE
         y = @player[2] - leg[1] + @player[0].height
         x = @player[1] - leg[0] + @player[3][1][0]
-        $window.draw_rect(x - 2, y - 2, 5, 5, 0xff_00ffff, 300)
+        $program.draw_rect(x - 2, y - 2, 5, 5, 0xff_00ffff, 300)
         x = @player[1] + leg[0] + @player[3][2][0]
-        $window.draw_rect(x - 2, y - 2, 5, 5, 0xff_00ffff, 300)
+        $program.draw_rect(x - 2, y - 2, 5, 5, 0xff_00ffff, 300)
       end
     end
   end

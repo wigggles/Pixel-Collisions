@@ -9,13 +9,13 @@ class Main_Menu < Base_Active
     @index = 0
     @input_pause = 0
     @item_list = ['New Game', 'Exit']
-    @font = Gosu::Font.new($window, Gosu::default_font_name, 28)
+    @font = Gosu::Font.new($program, Gosu::default_font_name, 28)
   end
   #---------------------------------------------------------------------------------------------------------
   def action
     case @index
     when 0 # new
-      $window.swap_active(Map_Stage.new(LVL_ONE))
+      $program.swap_active(Map_Stage.new(LVL_ONE))
     when 1 # exit
       exit
       return
@@ -48,7 +48,7 @@ class Main_Menu < Base_Active
     end
     # exit action
     if Gosu::button_down?(41) # esc
-      $window.close!
+      $program.close!
     end
   end
   #---------------------------------------------------------------------------------------------------------
@@ -66,9 +66,9 @@ class Main_Menu < Base_Active
   def draw
     return unless @@can_draw
     # background
-    $window.draw_rect(0, 0, $window.width, $window.height, 0xff_ffffff, 0)
+    $program.draw_rect(0, 0, $program.width, $program.height, 0xff_ffffff, 0)
     # draw selection display list
-    x, y = $window.width / 2 - 76, $window.height / 2 - 32
+    x, y = $program.width / 2 - 76, $program.height / 2 - 32
     i = 0
     @item_list.each do |selection|
       y += i * 32 # ascend vertically
@@ -78,7 +78,7 @@ class Main_Menu < Base_Active
         color = [0xFF_000000, 0xFF_ffffff] # un-selected
       end
       # draw selection text and box
-      $window.draw_rect(x, y, 128, 32, color[0], 1)
+      $program.draw_rect(x, y, 128, 32, color[0], 1)
       @font.draw(selection, x + 4, y + 4, 10, 1, 1, color[1])
       i += 1
     end
