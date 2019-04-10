@@ -16,6 +16,11 @@ https://rubygems.org/gems/gosu
 https://www.ruby-lang.org/en/documentation/installation/
 
 
+### To Run
+
+In a Terminal or system Console 'cd' into the project directory and use 'ruby run.rb' to launch the Gosu::Window.
+
+
 ### Notes
 
 If you change the Image used for the map, you will also have to delete the map collision cache data and rebuild it by loading into the map. Other wise changes to collisions by their pixel colors will not be correct to the updated map Image.
